@@ -1,0 +1,44 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+*.egg-info/
+dist/
+build/
+
+# YOLO/ML
+runs/
+weights/
+*.pt
+*.onnx
+*.weights
+
+# Data
+data/
+datasets/
+*.jpg
+*.png
+*.mp4
+*.avi
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+dataset/
+GIT_*
+.python*
