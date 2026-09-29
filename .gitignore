@@ -39,6 +39,8 @@ Thumbs.db
 *.log
 logs/
 
-dataset/
+Volleyball*
+Volley*
+*yolo26*
 GIT_*
 .python*
