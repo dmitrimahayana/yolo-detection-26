@@ -1,8 +1,7 @@
 from ultralytics import YOLO
 
-# Load a model
-model = YOLO("yolo26n.pt")  # load a pretrained model (recommended for training)
+# Load a model - resume from checkpoint or pretrained
+model = YOLO("runs/detect/train-2/weights/last.pt")  # resume from last VisDrone training
 
-# Train the model - dataset will auto-download on first run
-# resume=True will continue from last checkpoint in runs/detect/train*/weights/last.pt
-results = model.train(data="VisDrone.yaml", epochs=100, imgsz=640, device="mps", resume=True)
+# Train the model - will continue from checkpoint
+results = model.train(data="VisDrone.yaml", epochs=100, imgsz=640, device="mps")
