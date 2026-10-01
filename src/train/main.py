@@ -1,7 +1,15 @@
 from ultralytics import YOLO
+import os
+from pathlib import Path
 
-# Load a model - resume from checkpoint or pretrained
-model = YOLO("runs/detect/train-2/weights/last.pt")  # resume from last VisDrone training
+# Find latest checkpoint in runs/detect/train*/weights/last.pt
+checkpoints = sorted(Path("runs/detect").glob("train*/weights/last.pt"), key=os.path.getmtime, reverse=True)
+model_path = str(checkpoints[0]) if checkpoints else "yolo26n.pt"
 
-# Train the model - will continue from checkpoint
+print(f"Loading model from: {model_path}")
+
+# Load model (latest checkpoint or pretrained)
+model = YOLO(model_path)
+
+# Train the model
 results = model.train(data="VisDrone.yaml", epochs=100, imgsz=640, device="mps")
