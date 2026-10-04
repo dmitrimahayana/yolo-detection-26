@@ -226,8 +226,12 @@ print(f"Output directory: {output_dir}")
 
 # Step 4: Run YOLO prediction
 # stream=True: Process frame-by-frame (memory efficient for videos)
-# conf=0.25: Only keep detections with ≥25% confidence
-# iou=0.45: Non-Maximum Suppression threshold (removes duplicate boxes)
+# conf=0.25  # Standard (good balance)
+# conf=0.4   # Stricter (fewer false ball detections)
+# conf=0.15  # Permissive (catch distant/occluded players)
+# iou=0.45   # Standard NMS
+# iou=0.3    # Aggressive (good for tight player groups)
+# iou=0.6    # Permissive (allow overlapping detections)
 # verbose=False: Don't print progress for each frame
 results_generator = model.predict(
     source=video_path,
