@@ -108,13 +108,13 @@ results_generator = model.predict(
 # Settings are in seconds so they work on any fps. Convert them to frame counts here.
 # Example at 30fps: 0.5s -> 15 frames, 1.5s -> 45 frames.
 # max(1, ...) guarantees at least 1 frame even if fps is very low.
-window_frames_start = max(1, round(RALLY_START_WINDOW_SEC * fps))
+window_frames = max(1, round(RALLY_START_WINDOW_SEC * fps))
 end_idle_frames = max(1, round(RALLY_END_IDLE_SEC * fps))
 
 # Sliding window of True/False ("was the ball moving?") for the most recent frames.
 # deque(maxlen=N) automatically drops the oldest item when a new one is appended,
-# so it always holds only the last `window_frames_start` results.
-moving_history = deque(maxlen=window_frames_start)
+# so it always holds only the last `window_frames` results.
+moving_history = deque(maxlen=window_frames)
 
 # Memory between frames (None = "not seen yet"):
 last_ball_center = None   # (x, y) pixel center of the ball the last time it was detected
@@ -130,9 +130,6 @@ total_detections = 0
 
 print("\nProcessing frames:")
 for result in results_generator:
-    # Get annotated frame
-    annotated_frame = result.plot()
-
     # ---------- RALLY STEP 1: is the ball moving in this frame? ----------
     # Default to "not moving". It only becomes True if the ball is found AND it moved enough.
     ball_moving = False
@@ -194,6 +191,8 @@ for result in results_generator:
         moving_history.clear()
 
     # ---------- RALLY STEP 3: draw "RALLY" text at top-right if active ----------
+    # Get annotated frame
+    annotated_frame = result.plot()
     if is_rally_active:
         text = "RALLY"
         font = cv2.FONT_HERSHEY_SIMPLEX
